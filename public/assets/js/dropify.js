@@ -1,6 +1,5 @@
-$(function () {
-    "use strict";
+$(function() {
+  'use strict';
 
-    $("#offerLetterDropify").dropify();
-    $("#panDropify").dropify();
+  $('#myDropify').dropify();
 });

@@ -15,14 +15,16 @@ class EmployeeWelcomeEmail extends Mailable
 
     public $email;
     public $password;
+    public $role;
 
     /**
      * Create a new message instance.
      */
-    public function __construct($email, $password)
+    public function __construct($email, $password, $role)
     {
         $this->email = $email;
         $this->password = $password;
+        $this->role = $role;
     }
 
     /**
@@ -45,6 +47,7 @@ class EmployeeWelcomeEmail extends Mailable
             with: [
                 'email' => $this->email,
                 'password' => $this->password,
+                'role' => $this->role,
             ]
         );
     }

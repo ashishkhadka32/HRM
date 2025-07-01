@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\GenderEnum;
+use App\Models\Role;
 use App\EmployeeTypeEnum;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -29,6 +30,8 @@ class Employee extends Model
         'job_title',
         'employee_type',
         'department_id',
+        'offer_letter',
+        'role_id',
         'user_id',
     ];
 
@@ -47,5 +50,10 @@ class Employee extends Model
     public function department(): BelongsTo
     {
         return $this->belongsTo(Department::class);
+    }
+
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
     }
 }

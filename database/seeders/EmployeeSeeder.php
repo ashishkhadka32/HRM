@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\EmployeeTypeEnum;
 use App\GenderEnum;
+use App\Models\Role;
 use Illuminate\Database\Seeder;
 use App\Models\User;
 use App\Models\Employee;
@@ -25,14 +26,18 @@ class EmployeeSeeder extends Seeder
             'office_location' => 'Head Office',
         ]);
 
+        $role = Role::create([
+            'name' => 'HR Manager',
+        ]);
+
         $employeesData = [
             [
-                'email' => 'ashis@gmail.com',
+                'email' => 'ashis1@gmail.com',
                 'name' => 'Ashis Khadka',
                 'first_name' => 'Ashis',
                 'middle_name' => null,
                 'last_name' => 'Khadka',
-                'phone_number' => '9845632107',
+                'phone_number' => '9845632108',
                 'dob' => '1990-01-15',
                 'gender' => GenderEnum::Male,
                 'address' => 'BKT',
@@ -41,22 +46,7 @@ class EmployeeSeeder extends Seeder
                 'joining_date' => '2023-06-01',
                 'job_title' => 'Software Engineer',
                 'employee_type' => EmployeeTypeEnum::FullTime,
-            ],
-            [
-                'email' => 'jane.smith@company.com',
-                'name' => 'Jane Smith',
-                'first_name' => 'Jane',
-                'middle_name' => 'Ann',
-                'last_name' => 'Smith',
-                'phone_number' => '2345678901',
-                'dob' => '1988-03-22',
-                'gender' => GenderEnum::Female,
-                'address' => '456 Elm St, City',
-                'emergency_contact_name' => 'John Smith',
-                'emergency_contact_number' => '1234567891',
-                'joining_date' => '2022-09-15',
-                'job_title' => 'Project Manager',
-                'employee_type' => EmployeeTypeEnum::FullTime,
+                'role' => $role->name,
             ],
         ];
 
@@ -68,16 +58,18 @@ class EmployeeSeeder extends Seeder
             $user = User::create([
                 'name' => $data['name'],
                 'email' => $data['email'],
+                'role' => $data['role'],
                 'password' => Hash::make($plainPassword),
                 'email_verified_at' => now(),
             ]);
             echo "User created:\n";
             echo "Email: {$user->email}\n";
             echo "Password: {$plainPassword}\n\n";
+            echo "role: {$data['role']}\n";
 
             // Send welcome email
             try {
-                Mail::to($user->email)->send(new EmployeeWelcomeEmail($user->email, $plainPassword));
+                Mail::to($user->email)->send(new EmployeeWelcomeEmail($user->email, $plainPassword, $data['role']));
                 echo "Welcome email sent to {$user->email}\n";
             } catch (\Exception $e) {
                 echo "Failed to send email to {$user->email}: {$e->getMessage()}\n";
@@ -98,6 +90,7 @@ class EmployeeSeeder extends Seeder
                 'job_title' => $data['job_title'],
                 'employee_type' => $data['employee_type'],
                 'department_id' => $department->id,
+                'role_id' => $role->id,
                 'user_id' => $user->id,
             ]);
         }

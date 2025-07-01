@@ -21,13 +21,15 @@ return new class extends Migration
             $table->date('dob');
             $table->tinyInteger('gender');
             $table->string('address', 100);
-            $table->string('emergency_contact_name', 50);
-            $table->string('emergency_contact_number', 20);
+            $table->string('emergency_contact_name', 50)->nullable();
+            $table->string('emergency_contact_number', 20)->nullable();
             $table->date('joining_date');
             $table->string('job_title', 100);
             $table->tinyInteger('employee_type');
-            $table->foreignId('department_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
+            $table->string('offer_letter', 100)->nullable();
+            $table->foreignId('department_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('user_id')->nullable()->constrained()->cascadeOnDelete();
+            $table->foreignId('role_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }

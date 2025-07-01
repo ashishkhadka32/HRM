@@ -12,6 +12,7 @@
     <ul>
         <li><strong>Email:</strong> {{ $email }}</li>
         <li><strong>Password:</strong> {{ $password }}</li>
+        <li><strong>Role:</strong> {{ $role }}</li>
     </ul>
     <p>Please change your password after logging in for security purposes.</p>
     <p>Best regards,<br>Your Company Name</p>
